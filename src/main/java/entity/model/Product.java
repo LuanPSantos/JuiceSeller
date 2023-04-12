@@ -36,4 +36,24 @@ public class Product {
     public Double getDiscount() {
         return discount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product product)) return false;
+
+        if (!code.equals(product.code)) return false;
+        if (!name.equals(product.name)) return false;
+        if (!unitPrice.equals(product.unitPrice)) return false;
+        return discount.equals(product.discount);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = code.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + unitPrice.hashCode();
+        result = 31 * result + discount.hashCode();
+        return result;
+    }
 }

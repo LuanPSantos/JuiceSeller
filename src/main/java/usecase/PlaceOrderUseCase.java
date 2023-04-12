@@ -4,6 +4,7 @@ import entity.model.Order;
 import entity.service.CouponPrinterService;
 import entity.service.CouponService;
 import entity.service.PaymentService;
+import entity.service.PaymentService.PaymentException;
 
 public class PlaceOrderUseCase {
 
@@ -11,19 +12,22 @@ public class PlaceOrderUseCase {
     private final CouponService couponService;
     private final CouponPrinterService couponPrinterService;
 
-    public PlaceOrderUseCase(PaymentService paymentService, CouponService couponService, CouponPrinterService couponPrinterService) {
+    public PlaceOrderUseCase(
+            PaymentService paymentService,
+            CouponService couponService,
+            CouponPrinterService couponPrinterService) {
         this.paymentService = paymentService;
         this.couponService = couponService;
         this.couponPrinterService = couponPrinterService;
     }
 
-    public void execute(Input input) {
+    public void execute(Input input) throws PaymentException {
 
-        var sale = input.order;
+        var order = input.order;
 
-        paymentService.pay(sale.total(), sale.getPaymentMethod());
+        paymentService.pay(order.total(), order.getPaymentMethod());
 
-        var coupon = couponService.generate(sale);
+        var coupon = couponService.generate(order);
 
         couponPrinterService.printCustomerCoupon(coupon);
         couponPrinterService.printKitchenCoupon(coupon);

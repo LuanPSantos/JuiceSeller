@@ -25,4 +25,20 @@ public class Item {
     public Integer getAmount() {
         return amount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item item)) return false;
+
+        if (!product.equals(item.product)) return false;
+        return amount.equals(item.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = product.hashCode();
+        result = 31 * result + amount.hashCode();
+        return result;
+    }
 }

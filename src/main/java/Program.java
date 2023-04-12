@@ -5,6 +5,7 @@ import entity.model.Order;
 import entity.service.FakeCouponPrinterService;
 import entity.service.FakeCouponService;
 import entity.service.FakePaymentService;
+import entity.service.PaymentService;
 import usecase.PlaceOrderUseCase;
 import usecase.PlaceOrderUseCase.Input;
 
@@ -12,7 +13,7 @@ import java.time.Instant;
 
 public class Program {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PaymentService.PaymentException {
         var placeOrderUseCase = new PlaceOrderUseCase(
                 new FakePaymentService(),
                 new FakeCouponService(),
